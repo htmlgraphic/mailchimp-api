@@ -17,19 +17,19 @@ namespace Drewm;
  */
 class MailChimp
 {
-	private $api_key;
-	private $api_endpoint = 'https://<dc>.api.mailchimp.com/2.0';
-	private $verify_ssl   = false;
+	protected $apiKey;
+	protected $apiEndpoint = 'https://<dc>.api.mailchimp.com/2.0';
+	protected $verifySsl   = false;
 
 	/**
 	 * Create a new instance
 	 * @param string $api_key Your MailChimp API key
 	 */
-	function __construct($api_key)
+	public function __construct($apiKey)
 	{
-		$this->api_key = $api_key;
-		list(, $datacentre) = explode('-', $this->api_key);
-		$this->api_endpoint = str_replace('<dc>', $datacentre, $this->api_endpoint);
+		$this->apiKey = $apiKey;
+		list(, $datacentre) = explode('-', $this->apiKey);
+		$this->apiEndpoint = str_replace('<dc>', $datacentre, $this->apiEndpoint);
 	}
 
 
@@ -41,7 +41,7 @@ class MailChimp
 	 */
 	public function call($method, $args=array())
 	{
-		return $this->_raw_request($method, $args);
+		return $this->rawRequest($method, $args);
 	}
 
 
@@ -51,11 +51,11 @@ class MailChimp
 	 * @param  array  $args   Assoc array of parameters to be passed
 	 * @return array          Assoc array of decoded result
 	 */
-	private function _raw_request($method, $args=array())
+	protected function rawRequest($method, $args=array())
 	{      
-		$args['apikey'] = $this->api_key;
+		$args['apikey'] = $this->apiKey;
 
-		$url = $this->api_endpoint.'/'.$method.'.json';
+		$url = $this->apiEndpoint.'/'.$method.'.json';
 
 		if (function_exists('curl_init') && function_exists('curl_setopt')){
 			$ch = curl_init();
@@ -65,7 +65,7 @@ class MailChimp
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 			curl_setopt($ch, CURLOPT_POST, true);
-			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $this->verify_ssl);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $this->verifySsl);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($args));
 			$result = curl_exec($ch);
 			curl_close($ch);
