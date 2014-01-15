@@ -1,20 +1,27 @@
 {
-    "name": "drewm/mailchimp-api",
-    "description": "Super-simple, minimum abstraction MailChimp API v2 wrapper",
-    "license": "MIT",
+    "repositories": {
+        "mailchimp-api": {
+            "type": "package",
+            "homepage": "http://eugenemorgan.com/adding-a-random-github-repository-to-your-project-using-composer/",
+            "package": {
+                "name": "htmlgraphic/mailchimp-api",
+                "version": "1.0.0",
+                "source": {
+                    "url": "https://github.com/htmlgraphic/mailchimp-api.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        }
+    },
     "require": {
-        "php": ">=5.3"
+        "php": ">=5.3",
+        "htmlgraphic/mailchimp-api": "*"
     },
     "autoload": {
-        "psr-0": { "Drewm": "src/" }
-    },
-    "homepage": "https://github.com/drewm/mailchimp-api",
-    "authors": [ 
-        {
-            "name": "Drew McLellan",
-            "homepage": "http://allinthehead.com/"
-
-        }
-    ]
-
+            "psr-0": { 
+                "Drewm": "vendor/htmlgraphic/mailchimp-api/src/"
+            }
+    }
 }
+
